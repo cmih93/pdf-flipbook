@@ -4,56 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Flipbook</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="pdfjs/pdf.js"></script>
-    <script src="turnjs/turn.js"></script>
 </head>
 <body>
-    <div id="flipbook">
-        <!-- Pages will be dynamically added here -->
-    </div>
-
-    <script>
-        const url = 'pdf/DMihna_portfolio_pages.pdf';
-
-        // Loading the PDF document
-        const loadingTask = pdfjsLib.getDocument(url);
-        loadingTask.promise.then(function(pdf) {
-            const totalPages = pdf.numPages;
-            console.log('Total Pages:', totalPages); // Log total pages to check if PDF is loaded correctly
-            for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-                pdf.getPage(pageNum).then(function(page) {
-                    const viewport = page.getViewport({ scale: 1.5 });
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-
-                    const renderContext = {
-                        canvasContext: context,
-                        viewport: viewport
-                    };
-                    page.render(renderContext).promise.then(function() {
-                        const pageDiv = document.createElement('div');
-                        pageDiv.className = 'page';
-                        pageDiv.appendChild(canvas);
-                        document.getElementById('flipbook').appendChild(pageDiv);
-
-                        if (pageNum === totalPages) {
-                            $('#flipbook').turn({
-                                width: viewport.width * 2,
-                                height: viewport.height,
-                                autoCenter: true
-                            });
-                        }
-                    });
-                }).catch(function(error) {
-                    console.error('Error rendering page:', error); // Log any errors during page rendering
-                });
-            }
-        }).catch(function(error) {
-            console.error('Error loading PDF:', error); // Log any errors during PDF loading
-        });
-    </script>
+    <!-- Add your flipbook container here -->
+    <iframe src="https://docs.google.com/gview?url=https://github.com/yourusername/pdf-flipbook/raw/main/DMihna_portfolio_pages.pdf&embedded=true" frameborder="0" width="100%" height="600"></iframe>
 </body>
 </html>
