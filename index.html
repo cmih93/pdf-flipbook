@@ -15,11 +15,12 @@
 
     <script>
         const url = 'pdf/DMihna_portfolio_pages.pdf';
-        
+
         // Loading the PDF document
         const loadingTask = pdfjsLib.getDocument(url);
         loadingTask.promise.then(function(pdf) {
             const totalPages = pdf.numPages;
+            console.log('Total Pages:', totalPages); // Log total pages to check if PDF is loaded correctly
             for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
                 pdf.getPage(pageNum).then(function(page) {
                     const viewport = page.getViewport({ scale: 1.5 });
@@ -27,7 +28,7 @@
                     const context = canvas.getContext('2d');
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
-                    
+
                     const renderContext = {
                         canvasContext: context,
                         viewport: viewport
@@ -46,8 +47,12 @@
                             });
                         }
                     });
+                }).catch(function(error) {
+                    console.error('Error rendering page:', error); // Log any errors during page rendering
                 });
             }
+        }).catch(function(error) {
+            console.error('Error loading PDF:', error); // Log any errors during PDF loading
         });
     </script>
 </body>
